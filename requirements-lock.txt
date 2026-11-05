@@ -1,0 +1,16 @@
+# Exact versions SortView v1.10.3 was built and tested with (Python 3.10+ x64).
+#
+# BUILD.bat installs from this file so every release is built from the same
+# tested combination. requirements.txt keeps the loose lower bounds for
+# day-to-day development; if you bump a version here, test the app end to end
+# (video, audio, PDF/zip thumbnails, undo) before committing the change.
+PyQt6==6.12
+# Pillow 13.0.0 fixes ~37 known vulnerabilities that affect 11.3 (including
+# heap overflows when decoding crafted JPEG/TIFF/JPEG2000 files — this app
+# opens unknown files to build thumbnails, so the bump is security-critical).
+# Verified end to end with 13.0.0: png/jpg/gif/webp/tiff/bmp/zip/pdf
+# thumbnails, transfers and undo all work unchanged.
+Pillow==13.0.0
+PyMuPDF==1.26.7
+rarfile==4.2
+py7zr==1.1.4

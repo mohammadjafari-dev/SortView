@@ -1,0 +1,17 @@
+# Tested with: PyQt6 6.12 / Pillow 13.0.0 / PyMuPDF 1.26.7 /
+#              py7zr 1.1.4 / rarfile 4.2 (Python 3.10+ x64)
+#
+# PyQt6 >= 6.9 is REQUIRED for built-in video AND audio playback: the
+# QtMultimedia module (Qt's own media engine, FFmpeg backend included)
+# is part of these wheels, so media plays in-app with no VLC, no ffplay
+# and no external codecs. Older wheels (6.6/6.7) may silently lack it.
+PyQt6>=6.9
+# Pillow >= 13.0: 11.x/12.x have known vulnerabilities when decoding crafted
+# images (this app opens unknown files for thumbnails) — see requirements-lock.txt
+Pillow>=13.0
+PyMuPDF>=1.24          # 1.24+ provides the modern "import pymupdf" name
+rarfile>=4.0
+py7zr>=0.20
+
+# Optional alternative Qt6 binding if you prefer it instead of PyQt6:
+# PySide6>=6.6

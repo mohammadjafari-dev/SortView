@@ -1,0 +1,13 @@
+# Normalize line endings across platforms: text files are stored with LF in
+# the repository and checked out with the native ending (CRLF on Windows).
+* text=auto
+
+# Windows scripts MUST keep CRLF: cmd.exe can misparse LF-only .bat files
+# (labels/goto), and PowerShell prefers CRLF for .ps1 too.
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary assets — never let git touch or diff these.
+*.png binary
+*.gif binary
+*.ttf binary
