@@ -18,11 +18,20 @@ no third-party icon packs and no brand logos are bundled.
 | [PySide6](https://www.qt.io/qt-for-python) *(optional alternative Qt binding)* | GUI framework | LGPL v3 | bundled via pip |
 | [PyMuPDF (fitz)](https://pymupdf.readthedocs.io/) | PDF thumbnails & rendering | AGPL v3 (or Artifex commercial license) | bundled via pip |
 | [Pillow](https://python-pillow.org/) | image decoding / type cards | MIT-CMU (HPND) | bundled via pip |
-| [FFmpeg](https://ffmpeg.org/) (`ffmpeg.exe`) | video thumbnails (bundled in `bin\`, license text shipped as `ffmpeg-LICENSE.txt` / `ffmpeg-README.txt`) | FFmpeg is LGPL-2.1-or-later / GPL depending on build configuration; the pinned 7.1.1 *essentials* build includes GPL components | pinned 7.1.1 essentials build (SHA-256 verified): [release](https://github.com/GyanD/codexffmpeg/releases/tag/7.1.1) · [source of these binaries](https://ffmpeg.org/releases/ffmpeg-7.1.1.tar.xz) |
+| [FFmpeg](https://ffmpeg.org/) (`ffmpeg.exe`) | video thumbnails (bundled in `bin\`, license text shipped as `ffmpeg-LICENSE.txt` / `ffmpeg-README.txt`) | **GPL v3** — the pinned build is configured with `--enable-gpl --enable-version3` and links GPL codec libraries (libx264, libx265, libxvidcore, libaom) | pinned 7.1.1 essentials build (SHA-256 verified): [release page with the full library list](https://github.com/GyanD/codexffmpeg/releases/tag/7.1.1) · [ffmpeg source tarball](https://ffmpeg.org/releases/ffmpeg-7.1.1.tar.xz) |
 | [py7zr](https://github.com/miurahr/py7zr) | reading `.7z` archives | LGPL-2.1-or-later | bundled via pip |
+| [multivolumefile](https://github.com/miurahr/multivolumefile) | py7zr dependency (multi-volume archive support) | LGPL-2.1-or-later | bundled via pip |
+| [pyppmd](https://github.com/miurahr/pyppmd) | py7zr dependency (PPMD compression codec) | LGPL-2.1-or-later | bundled via pip |
+| [pybcj](https://github.com/miurahr/pybcj) | py7zr dependency (BCJ branch filters) | LGPL-2.1-or-later | bundled via pip |
+| [inflate64](https://github.com/miurahr/inflate64) | py7zr dependency (deflate64 decompression) | LGPL-2.1-or-later | bundled via pip |
+| [brotli](https://github.com/google/brotli) | py7zr dependency (Brotli-compressed entries) | MIT | bundled via pip |
+| [pycryptodomex](https://pycryptodome.readthedocs.io/) | py7zr dependency (encrypted archives) | BSD, Public Domain | bundled via pip |
+| [psutil](https://github.com/giampaolo/psutil) | py7zr dependency (memory checks) | BSD-3-Clause | bundled via pip |
 | [rarfile](https://github.com/markokr/rarfile) | reading `.rar` archives | ISC | bundled via pip |
+| [Python 3.13](https://www.python.org/) (`python313.dll` embedded in the exe by PyInstaller) | the runtime the exe carries | PSF License Version 2 | [source](https://www.python.org/downloads/source/) |
+| [OpenSSL 3.x](https://www.openssl.org/) (`libcrypto-3-x64.dll` / `libssl-3-x64.dll` shipped next to the exe by PyInstaller) | crypto backend of Python's `ssl` / `hashlib` | Apache-2.0 | [source](https://github.com/openssl/openssl) |
 | [Vazirmatn font](https://github.com/rastikerdar/vazirmatn) (`Vazirmatn-Regular.ttf`) | UI font | SIL Open Font License 1.1 — full text bundled in [`assets\OFL.txt`](assets/OFL.txt) | bundled in `assets\` |
-| [PyInstaller](https://pyinstaller.org/) *(build-time only, not distributed)* | packaging into a portable exe | GPL with bootloader exception | bundled via pip |
+| [PyInstaller](https://pyinstaller.org/) | packaging into a portable exe — its bootloader is embedded in `SortView.exe` | GPL-2.0-or-later with a bootloader exception that permits distributing the embedded bootloader | [source](https://github.com/pyinstaller/pyinstaller) |
 
 ## Notes for distributors
 
@@ -41,10 +50,14 @@ no third-party icon packs and no brand logos are bundled.
   The pinned, hash-verified download is the ONLY source: a system-PATH
   ffmpeg or a pre-existing `bin\` copy is never reused, so builds stay
   reproducible.
-- The bundled ffmpeg build includes a complete corresponding source offer:
-  the source link in the table points at the exact tarball of the version
-  inside the portable zip (ffmpeg 7.1.1) — the same version as the binary,
-  not just the project homepage.
+- The bundled ffmpeg build includes a corresponding source offer: the
+  ffmpeg tarball link in the table points at the exact source version of
+  the binary inside the portable zip (ffmpeg 7.1.1). Note that the pinned
+  *essentials* build links GPL codec libraries (libx264, libx265,
+  libxvidcore, libaom) whose sources are not part of that tarball; the
+  upstream sources of those libraries are listed on the linked GyanD
+  release page, and each library's own upstream repository provides its
+  source.
 - The portable exe also contains the Qt 6 libraries and the FFmpeg media
   backend that come inside the PyQt6 wheels (`--collect-all PyQt6`). Both
   are LGPL-licensed and dynamically usable without releasing this

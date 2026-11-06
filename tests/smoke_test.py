@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Part of SortView (سورت‌ویو).
-# Copyright (C) 2026 Mohammad Jafari (mohammadjafari-dev)
+# Copyright (c) 2026 Mohammad Jafari
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Offscreen smoke test for SortView — runs in GitHub Actions CI on every push.
 

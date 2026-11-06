@@ -48,11 +48,11 @@ touches the network: your files stay on your PC.
 ## Download & Install
 
 1. Go to the [Releases page](../../releases/latest) and download
-   `SortView-win64-portable.zip` (and, if you want to verify the download,
-   the matching `SortView-win64-portable.zip.sha256` file).
+   `SortView-win64-portable.zip`.
 2. Optional — verify the checksum in PowerShell:
    `Get-FileHash -Algorithm SHA256 SortView-win64-portable.zip`
-   and compare it with the value inside the `.sha256` file.
+   and compare it with the SHA-256 value printed in the release notes —
+   GitHub also displays the checksum right next to the asset.
 3. Extract it anywhere — Desktop, a USB stick, whatever suits you.
 4. Run `SortView.exe`. No installer, no Python, no ffmpeg, nothing else
    needed — everything is in the zip.
@@ -63,8 +63,8 @@ touches the network: your files stay on your PC.
 > your PC"*, click **More info → Run anyway**. The app is not code-signed
 > yet, and Windows shows this warning for every new unsigned program. The
 > complete source code is open right here in this repository, and the
-> release page publishes the zip together with a matching `.sha256`
-> checksum file so you can verify what you downloaded.
+> release page prints the SHA-256 checksum of the zip (GitHub also shows
+> it next to the asset) so you can verify what you downloaded.
 
 To uninstall, simply delete the extracted folder — the app keeps all its
 settings and cache inside that folder.
@@ -182,7 +182,7 @@ program, SortView is provided **without any warranty** — see
 |---|---|
 | Video | mp4, mkv, avi, mov, webm, wmv, flv, mpeg, mpg, m4v, ts |
 | Audio | mp3, wav, flac, aac, ogg, opus, m4a, wma |
-| Images | png, jpg, jpeg, bmp, webp, tiff, jxl, gif (animated) |
+| Images | png, jpg, jpeg, bmp, webp, tiff, gif (animated) |
 | Archives | zip, rar, 7z, tar, gz |
 | Documents | pdf, txt, md, doc(x), xls(x), ppt(x), epub |
 | Subtitles | srt, ass, ssa, vtt, sub, idx |
@@ -195,8 +195,8 @@ Anything else gets a clean generated type card, so the grid stays readable.
 **Windows showed "Windows protected your PC" and blocked the app.**
 The app is not code-signed (signing certificates cost money). Click
 **More info → Run anyway**. The full source code is in this repository, and
-the release page publishes the zip together with its `.sha256` checksum
-file.
+the release page prints the zip's SHA-256 checksum (GitHub shows it next
+to the asset too).
 
 **A video doesn't play.**
 SortView plays video and audio through the Qt Multimedia engine that ships
@@ -245,6 +245,13 @@ user_data\
 
 Uninstalling = deleting the folder. Nothing is written to the registry.
 
+Two exceptions worth knowing: if the folder SortView runs from is not
+writable (e.g. the exe was launched from a read-only location), the whole
+`user_data\` set is created in `%LOCALAPPDATA%\SortView\user_data\`
+instead; and short-lived temporary files (video frames for thumbnails,
+`7z` archive listings) go to the system `%TEMP%` folder and are cleaned
+up when done.
+
 ## For developers
 
 ### Run from source
@@ -273,14 +280,16 @@ BUILD.bat                    :: builds dist\SortView\ + SortView-win64-portable.
 `bin\` is not stored in the repository (an 87 MB third-party binary);
 `build_deps.ps1` downloads it with a pinned SHA-256 hash on first run,
 so a fresh clone builds out of the box. Distribute
-`SortView-win64-portable.zip` through GitHub Releases, together with the
-generated `.sha256` file.
+`SortView-win64-portable.zip` through GitHub Releases — GitHub computes
+and displays the SHA-256 of the uploaded asset automatically; keep the
+generated `.sha256` file for local reference only.
 
 ### Technical notes
 
 - **Transfers**: hardlink when possible; otherwise an exclusive copy
-  (`O_EXCL`, can never overwrite) plus source delete after full success;
-  unique names for collisions; runs off the UI thread, cancellable.
+  (`O_EXCL`, can never overwrite); the source is deleted only after the
+  copy passes a size check (not a full hash pass); unique names for
+  collisions; runs off the UI thread, cancellable.
 - **Undo**: completed transfer rounds are kept as (source, destination)
   pairs in memory (last 50 rounds, cleared on close); undo replays the
   newest round off the UI thread without ever overwriting anything and
@@ -315,7 +324,7 @@ All notable changes are documented in
 
 ## License & credits
 
-Copyright (C) 2026 Mohammad Jafari (mohammadjafari-dev)
+Copyright (c) 2026 Mohammad Jafari
 
 This project is licensed under **GPL-3.0-or-later** — see
 [`LICENSE`](LICENSE). In short: you are free to use, study, modify and

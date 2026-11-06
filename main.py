@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # ----------------------------------------------------------------------------
 # SortView (سورت‌ویو) — fast thumbnail browsing and safe file sorting.
-# Copyright (C) 2026 Mohammad Jafari (mohammadjafari-dev)
+# Copyright (c) 2026 Mohammad Jafari
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
